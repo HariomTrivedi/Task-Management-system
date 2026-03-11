@@ -1,0 +1,47 @@
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Python compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# SQLite database file(s)
+/data/*.db
+data/*.db
+*.db
+
+# Editor/IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Env files
+.env
+.env.*
+
+# Test & coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Packaging
+build/
+dist/
+*.egg-info/
+
+# Misc
+pip-log.txt
+pip-delete-this-directory.txt
+.python-version
