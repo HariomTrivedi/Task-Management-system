@@ -30,7 +30,6 @@ class TaskAPI(BaseHTTPRequestHandler):
             self.wfile.write(json.dumps(tasks).encode())
 
     def do_POST(self):
-
         # create task
         if self.path == "/tasks":
             try:

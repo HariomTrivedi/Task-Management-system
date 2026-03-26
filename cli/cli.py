@@ -69,6 +69,64 @@ def delete_task_cli(task_id):
     _p(r.json())
 
 
+def print_help_guide():
+    print("""
+Task Manager CLI - Help Guide
+
+This CLI helps you manage tasks via the Task Manager API.
+
+Available commands:
+
+1. list
+   - List all tasks
+   - Options: --status (pending|completed), --priority (low|medium|high)
+   - Examples:
+     python -m cli.cli list
+     python -m cli.cli list --status pending
+     python -m cli.cli list --priority high
+
+2. create
+   - Create a new task
+   - Required: title
+   - Options: --description, --priority (low|medium|high), --due_date (YYYY-MM-DD)
+   - Example:
+     python -m cli.cli create "Buy groceries" --description "Milk, eggs" --priority high --due_date 2026-03-20
+
+3. update
+   - Update an existing task (partial updates allowed)
+   - Required: id (task ID)
+   - Options: --title, --description, --priority, --due_date
+   - Example:
+     python -m cli.cli update 1 --title "New title" --priority medium
+
+4. complete
+   - Mark a task as completed
+   - Required: id (task ID)
+   - Example:
+     python -m cli.cli complete 1
+
+5. delete
+   - Delete a task
+   - Required: id (task ID)
+   - Example:
+     python -m cli.cli delete 1
+
+6. help
+   - Show this help guide
+   - Example:
+     python -m cli.cli help
+
+Notes:
+- Make sure the API server is running (python -m api.server) before using the CLI.
+- Task IDs are integers (use 'list' to see current tasks and their IDs).
+- Priority values: low, medium, high (default is medium).
+- Due dates should be in YYYY-MM-DD format.
+- All commands require the API to be available at http://localhost:8000.
+
+For more details on each command, run: python -m cli.cli <command> --help
+""")
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(prog="task-cli", description="Task Manager CLI")
     sub = parser.add_subparsers(dest="cmd")
@@ -96,6 +154,8 @@ def main(argv=None):
     p = sub.add_parser("delete", help="Delete a task")
     p.add_argument("id", type=int, help="Task id")
 
+    p = sub.add_parser("help", help="Show help and command guide")
+
     args = parser.parse_args(argv)
 
     try:
@@ -109,6 +169,8 @@ def main(argv=None):
             complete_task_cli(args.id)
         elif args.cmd == "delete":
             delete_task_cli(args.id)
+        elif args.cmd == "help":
+            print_help_guide()
         else:
             parser.print_help()
     except requests.RequestException as e:
